@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Comparator;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Ticket implements Comparable{
+public class Ticket implements Comparable<Ticket> {
     private int id;
     private int price;
     private String departureAirport;
@@ -22,8 +24,7 @@ public class Ticket implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        Ticket p = (Ticket) o;
-        return price - p.price;
+    public int compareTo(Ticket o) {
+        return price - o.price;
     }
 }

@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Ticket;
+import ru.netology.domain.TicketByPriceAscComparator;
 import ru.netology.repository.TicketRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,22 +36,43 @@ class TicketManagerTest {
     }
 
     @Test
-    public void findAll() {
+    public void findAllDefault() {
         Ticket[] actual = manager.findAll("LED", "MOW");
         Ticket[] expected = new Ticket[]{ticket8, ticket2, ticket5};
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void findAllOneTicket() {
+    public void findAllDefaultOneTicket() {
         Ticket[] actual = manager.findAll("LED", "GOJ");
         Ticket[] expected = new Ticket[]{ticket3};
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void findAllNonTicket() {
+    public void findAllDefaultNonTicket() {
         Ticket[] actual = manager.findAll("KUF", "LED");
+        Ticket[] expected = new Ticket[0];
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void findAllComparatorByTime() {
+        Ticket[] actual = manager.findAll("LED", "MOW", new TicketByPriceAscComparator());
+        Ticket[] expected = new Ticket[]{ticket5, ticket2, ticket8};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void findAllComparatorByTimeOneTicket() {
+        Ticket[] actual = manager.findAll("LED", "GOJ", new TicketByPriceAscComparator());
+        Ticket[] expected = new Ticket[]{ticket3};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void findAllComparatorByTimeNonTicket() {
+        Ticket[] actual = manager.findAll("KUF", "LED", new TicketByPriceAscComparator());
         Ticket[] expected = new Ticket[0];
         assertArrayEquals(expected, actual);
     }
